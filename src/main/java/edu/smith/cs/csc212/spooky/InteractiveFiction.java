@@ -37,14 +37,24 @@ public class InteractiveFiction {
 			if (here.isTerminalState()) {
 				break;
 			}
+			// Have I been here before?
+			if (here.checkVisit()) {
+				System.out.println("This place feels familiar...");
+			}
+
+			// Now I've been here!
+			here.visit(); 
 
 			// Show a user the ways out of this place.
 			List<Exit> exits = here.getVisibleExits();
+			List<Exit> secretExits = here.getSecretExits();
 
 			for (int i=0; i<exits.size(); i++) {
 				Exit e = exits.get(i);
 				System.out.println(" "+i+". " + e.getDescription());
 			}
+
+			
 
 			// Figure out what the user wants to do, for now, only "quit" is special.
 			List<String> words = input.getUserWords("?");
@@ -57,11 +67,37 @@ public class InteractiveFiction {
 			// Do not uppercase action -- I have lowercased it.
 			String action = words.get(0).toLowerCase().trim();
 
-			if (action.equals("quit")) {
+			if (action.equals("quit")||action.equals("escape")||action.equals("q")) {
 				if (input.confirm("Are you sure you want to quit?")) {
 					return place;
 				} else {
 					continue;
+				}
+			}
+
+			if (action.equals("search")) {
+				for (int i=0; i < secretExits.size(); i++) {
+					Exit e = secretExits.get(i);
+					
+				    e.search();
+				}
+				continue;
+			}
+
+			// help function!
+			if (action.equals("help")) {
+				System.out.println("");
+				System.out.println("");
+				System.out.println("Welcome to the Help Page:");
+				System.out.println("Select the option and type in the number to go!");
+				System.out.println("");
+				System.out.println("Hope you do well in this game!!");
+				System.out.println("");
+				System.out.println("");
+				if (input.confirm("Continue the Game?")) {
+					continue;
+				} else {
+					return place;
 				}
 			}
 
@@ -96,7 +132,10 @@ public class InteractiveFiction {
 		TextInput input = TextInput.fromArgs(args);
 
 		// This is the game we're playing.
-		GameWorld game = new SpookyMansion();
+		//GameWorld game = new SpookyMansion();
+		GameWorld game = new SpookyFord();  
+
+		// My own version Spooky Ford HALL! included secret game.
 
 		// Actually play the game.
 		runGame(input, game);

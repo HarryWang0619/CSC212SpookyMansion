@@ -26,7 +26,11 @@ public class Place {
 	 * Whether reaching this place ends the game.
 	 */
 	private boolean terminal;
-	
+	/**
+	 * Does this place seems familiar to you?  0n0
+	 * /[GhostFace]
+	 */
+	private boolean visit;
 	/**
 	 * Internal only constructor for Place. Use {@link #create(String, String)} or {@link #terminal(String, String)} instead.
 	 * @param id - the internal id of this place.
@@ -38,6 +42,7 @@ public class Place {
 		this.description = description;
 		this.exits = new ArrayList<>();
 		this.terminal = terminal;
+		this.visit = false;
 	}
 	
 	/**
@@ -74,14 +79,41 @@ public class Place {
 
 	/**
 	 * Get a view of the exits from this Place, for navigation.
-	 * @return all the exits from this place.
+	 * @return all the exits from this place.    
+	 * PARTIAL DONE
 	 */
 	public List<Exit> getVisibleExits() {
 		List<Exit> visible = new ArrayList<>();
 		for (Exit e : this.exits) {
-			visible.add(e);
+			if (!e.isSecret()) {
+				if (!e.hidden()) {
+					visible.add(e);
+				}
+			}
 		}
 		return visible;
+	}
+
+	// public List<Exit> getVisibleExits() {
+	// 	List<Exit> visible = new ArrayList<>();
+	// 	for (Exit e : this.exits) {
+	// 		visible.add(e);	
+	// 	}
+	// 	return visible;
+	// }
+
+
+	/**
+	 * Return secret exit!
+	 */
+	public List<Exit> getSecretExits() {
+		List<Exit> secretExits = new ArrayList<>();
+		for (Exit e : this.exits) {
+			if (e.isSecret()||e.hidden()) {
+				secretExits.add(e);
+			}
+		}
+		return secretExits;
 	}
 	
 	/**
@@ -128,4 +160,17 @@ public class Place {
 		return false;
 	}
 	
+	/**
+	 * Hey! Now I visited this place!
+	 */
+	public void visit() {
+		this.visit = true; 
+	}
+	
+	/**
+	 * Wait, Have I been here before?
+	 */
+	public boolean checkVisit() {
+		return this.visit;
+	}
 }

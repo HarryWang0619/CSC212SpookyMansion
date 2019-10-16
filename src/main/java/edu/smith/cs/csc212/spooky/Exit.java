@@ -26,7 +26,12 @@ public class Exit {
 		this.description = description;
 		this.target = target;
 	}
-	
+	/**
+	 * do nothing
+	 */
+	public void search() {
+		//NOTHING!
+	}
 	/**
 	 * A getter for the description of this exit.
 	 * @return how it looks.
@@ -66,6 +71,22 @@ public class Exit {
 		return this.target.equals(other.target);
 	}
 	
+	/**
+	 * Default not secret!
+	 * @return boolean value false
+	 */
+	public boolean isSecret() {
+		return false;
+	}
+
+	/**
+	 * Default not Hidden!
+	 * @return false
+	 */
+	public boolean hidden() {
+		return false;
+	
+}
 	/**
 	 * The other half of hashCode that lets us put it in a HashMap or HashSet.
 	 */

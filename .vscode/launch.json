@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - InteractiveFiction",
+            "request": "launch",
+            "mainClass": "edu.smith.cs.csc212.spooky.InteractiveFiction",
+            "projectName": "SpookyMansion"
+        }
+    ]
+}

@@ -3,10 +3,7 @@ package edu.smith.cs.csc212.spooky;
 
 public class SecretExit extends Exit{
     
-    /**
-	 * is secret!
-	 */
-    public boolean isSecret;
+
     /**
 	 * is hidden!
 	 */
@@ -19,7 +16,6 @@ public class SecretExit extends Exit{
 	 */
     public SecretExit(String target, String description) {
 		super(target, description); //call super EXIT!
-		this.isSecret = true; 
 		this.hidden = true;
     }
     
@@ -34,7 +30,7 @@ public class SecretExit extends Exit{
 	
 	@Override
 	public boolean isSecret() {
-		return this.isSecret;
+		return this.hidden;
 	}
 	
 	@Override
